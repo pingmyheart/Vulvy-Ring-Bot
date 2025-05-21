@@ -19,6 +19,10 @@ class Constant:
             return self.__translation_holder.find_translation(lang=lang,
                                                               i18n_key="response.selectLanguage")
 
+    def select_configuration_option(self, lang: str) -> str:
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="response.selectConfigurationOption")
+
     def welcome_message(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="response.welcome")

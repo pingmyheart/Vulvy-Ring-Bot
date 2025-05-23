@@ -5,12 +5,15 @@ class RingStatusEnum(Enum):
     """
     Enum for the status of the ring.
     """
-    INSERTED = (1000, "Inserted")
-    REMOVED = (2000, "Removed")
+    INSERTED = (1000, "Inserted", "enum.ring.inserted")
+    REMOVED = (2000, "Removed", "enum.ring.removed")
 
-    def __init__(self, code: int, enum_name: str):
+    def __init__(self, code: int,
+                 enum_name: str,
+                 i18n_key: str):
         self.code = code
         self.enum_name = enum_name
+        self.i18n_key = i18n_key
 
     @classmethod
     def get_by_code(cls, code: int):

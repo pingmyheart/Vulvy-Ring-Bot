@@ -1,0 +1,2 @@
+class ConfigureCommandHandler:
+    pass

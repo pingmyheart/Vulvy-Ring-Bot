@@ -1,0 +1,2 @@
+class StartCommandHandler:
+    pass

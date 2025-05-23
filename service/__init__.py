@@ -1,9 +1,11 @@
 from persistence import user_repository_bean
+from service.ring_service import RingService
 from service.translation_service import TranslationService
 from service.translation_service_holder import TranslationServiceHolder
 from service.user_service import UserService
 
 user_service_bean = UserService(user_repository=user_repository_bean)
+ring_service_bean = RingService(user_repository=user_repository_bean)
 
 it_translation_service_bean = TranslationService(language="it",
                                                  flag="🇮🇹")

@@ -18,7 +18,7 @@ class RingInformation(BaseModel):
     """
     Ring information.
     """
-    ring_date: Optional[datetime] = None
+    ring_date: Optional[str] = None  # Formatted string like "YYYY-MM-DD"
     ring_insertion_time: Optional[str] = None  # Formatted string like "HH:MM"
     ring_status: Optional[int] = None
 

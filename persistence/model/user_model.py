@@ -39,3 +39,4 @@ class UserModel(BaseModel):
     id: Optional[str] = Field(None, alias="_id")
     user: Optional[UserInformation] = None
     ring: Optional[RingInformation] = None
+    timezone: Optional[TimeZoneInformation] = None

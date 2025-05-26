@@ -10,7 +10,7 @@ def __extract_chat_id(message):
         return message.from_user.id
 
 
-def log_trigger(func):
+def log_triggered_method(func):
     @functools.wraps(func)  # Preserve the original function's name and docstring
     def wrapper(*args, **kwargs):
         # Get the name of the method

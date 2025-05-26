@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, time
 from typing import List
 
 from enumerated.ring_status_enum import RingStatusEnum
-from persistence.model.user_model import UserModel, RingInformation
+from persistence.model.user_model import UserModel
 from persistence.repository import UserRepository
 
 
@@ -25,15 +25,23 @@ class RingService:
             calendar: List = []
             relative_date: datetime = datetime.strptime(user.ring.ring_date, "%Y-%m-%d")
             for _ in range(6):
-                calendar.append({"date": relative_date + timedelta(days=21), "status": RingStatusEnum.REMOVED})
-                calendar.append({"date": relative_date + timedelta(days=28), "status": RingStatusEnum.INSERTED})
+                calendar.append({
+                    "date": f'{(relative_date + timedelta(days=21)).strftime("%Y-%m-%d")} {user.ring.ring_insertion_time}',
+                    "status": RingStatusEnum.REMOVED})
+                calendar.append({
+                    "date": f'{(relative_date + timedelta(days=28)).strftime("%Y-%m-%d")} {user.ring.ring_insertion_time}',
+                    "status": RingStatusEnum.INSERTED})
                 relative_date = relative_date + timedelta(days=28)
         else:
             calendar = []
             relative_date: datetime = datetime.strptime(user.ring.ring_date, "%Y-%m-%d")
             for _ in range(6):
-                calendar.append({"date": relative_date + timedelta(days=7), "status": RingStatusEnum.INSERTED})
-                calendar.append({"date": relative_date + timedelta(days=28), "status": RingStatusEnum.REMOVED})
+                calendar.append({
+                    "date": f'{(relative_date + timedelta(days=7)).strftime("%Y-%m-%d")} {user.ring.ring_insertion_time}',
+                    "status": RingStatusEnum.INSERTED})
+                calendar.append({
+                    "date": f'{(relative_date + timedelta(days=28)).strftime("%Y-%m-%d")} {user.ring.ring_insertion_time}',
+                    "status": RingStatusEnum.REMOVED})
                 relative_date = relative_date + timedelta(days=28)
         return calendar
 
@@ -54,8 +62,6 @@ class RingService:
         """
         user = self.user_repository.find_by_chat_id(chat_id=chat_id)
         if user is not None:
-            if user.ring is None:
-                user.ring = RingInformation()
             user.ring.ring_date = ring_date
             self.user_repository.save(user=user)
 

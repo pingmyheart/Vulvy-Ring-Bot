@@ -19,13 +19,12 @@ class TestRingService(TestCase):
             user = UserModel(user=UserInformation(username="maria_rossi",
                                                   chat_id=1234567890,
                                                   date_of_birth=datetime.strptime("1990-10-10", "%Y-%m-%d")),
-                             ring=RingInformation(ring_date=datetime.now(),
+                             ring=RingInformation(ring_date=datetime.now().strftime("%Y-%m-%d"),
                                                   ring_insertion_time="15:00",
                                                   ring_status=RingStatusEnum.INSERTED.code))
 
             repository.save(user=user)
             user_from_db = repository.find_by_chat_id(chat_id=1234567890)
             print(user_from_db)
-            [print(f"{date.day}-{date.month}-{date.year}") for date in
-             ring_service.generate_ring_calendar(chat_id=1234567890)]
+            [print(date["date"]) for date in ring_service.generate_ring_calendar(chat_id=1234567890)]
             assert user_from_db is not None

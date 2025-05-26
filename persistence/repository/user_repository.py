@@ -1,4 +1,5 @@
 import uuid
+from typing import List
 
 from persistence.model.user_model import UserModel
 
@@ -42,3 +43,10 @@ class UserRepository:
         if user:
             return UserModel.model_validate(user)
         return None
+
+    def find_all(self) -> List[UserModel]:
+        """
+        Find all users inside the database
+        :return: List of UserModel
+        """
+        return [UserModel.model_validate(model) for model in self.database.find()]

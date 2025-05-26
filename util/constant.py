@@ -67,17 +67,25 @@ class Constant:
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="response.insertionDate")
 
-    def insertion_date_placeholder(self, lang: str):
+    def insertion_date_time_placeholder(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
-                                                          i18n_key="placeholder.insertion.date")
+                                                          i18n_key="placeholder.insertion.dateTime")
+
+    def location_for_timezone_placeholder(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="placeholder.locationForTimeZone")
+
+    def timezone_correctly_settled(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="response.timezoneSet")
+
+    def timezone_set_error(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="response.timezoneSetError")
 
     def insertion_time(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="response.insertionTime")
-
-    def insertion_time_placeholder(self, lang: str):
-        return self.__translation_holder.find_translation(lang=lang,
-                                                          i18n_key="placeholder.insertion.time")
 
     def choose_option(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
@@ -98,3 +106,11 @@ class Constant:
     def ring_time_accepted(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="response.acceptTime")
+
+    def ring_insert(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="enum.ring.inserted")
+
+    def ring_remove(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="enum.ring.removed")

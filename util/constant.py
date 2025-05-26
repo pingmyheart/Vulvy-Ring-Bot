@@ -114,3 +114,19 @@ class Constant:
     def ring_remove(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="enum.ring.removed")
+
+    def time_to_insert_ring(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="response.timeToInsertRing")
+
+    def tomorrow_ring_insertion(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="response.timeToInsertRing.tomorrow")
+
+    def time_to_remove_ring(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="response.timeToRemoveRing")
+
+    def tomorrow_ring_removal(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="response.timeToRemoveRing.tomorrow")

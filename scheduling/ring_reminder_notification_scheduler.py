@@ -11,7 +11,7 @@ from service.user_service import UserService
 from util import constant_bean, Constant
 
 
-class RingNotificationScheduler:
+class RingReminderNotificationScheduler:
     def __init__(self, user_service_bean: UserService,
                  ring_service_bean: RingService,
                  constant_bean: Constant,
@@ -31,38 +31,34 @@ class RingNotificationScheduler:
                 ring_date = datetime.strptime(user.ring.ring_date, "%Y-%m-%d")
                 ring_time = datetime.strptime(user.ring.ring_insertion_time, "%H:%M")
                 if user.ring.ring_status == RingStatusEnum.INSERTED.code:
-                    if now_at_timezone.day == (ring_date + timedelta(days=21)).day and \
-                            now_at_timezone.month == (ring_date + timedelta(days=21)).month and \
+                    if now_at_timezone.day == (ring_date + timedelta(days=20)).day and \
+                            now_at_timezone.month == (ring_date + timedelta(days=20)).month and \
                             now_at_timezone.hour == ring_time.hour and \
                             now_at_timezone.minute == ring_time.minute:
-                        self.__handle_change_and_notify(ring_status=RingStatusEnum.REMOVED,
-                                                        user=user)
+                        self.__handle_notify(ring_status=RingStatusEnum.REMOVED,
+                                             user=user)
                 else:
-                    if now_at_timezone.day == (ring_date + timedelta(days=7)).day and \
-                            now_at_timezone.month == (ring_date + timedelta(days=7)).month and \
+                    if now_at_timezone.day == (ring_date + timedelta(days=6)).day and \
+                            now_at_timezone.month == (ring_date + timedelta(days=6)).month and \
                             now_at_timezone.hour == ring_time.hour and \
                             now_at_timezone.minute == ring_time.minute:
-                        self.__handle_change_and_notify(ring_status=RingStatusEnum.INSERTED,
-                                                        user=user)
+                        self.__handle_notify(ring_status=RingStatusEnum.INSERTED,
+                                             user=user)
             except Exception as e:
                 log.warn(f"Error with user {user.id}, {e}")
 
-    def __handle_change_and_notify(self, ring_status: RingStatusEnum,
-                                   user: UserModel):
-        log.info(f"Handling changes for user `{user.id}` with status `{ring_status}`")
-        self.ring_service_bean.update_ring_date(chat_id=user.user.chat_id,
-                                                ring_date=datetime.now().strftime("%Y-%m-%d"))
-        self.ring_service_bean.update_ring_status(chat_id=user.user.chat_id,
-                                                  ring_status=ring_status)
+    def __handle_notify(self, ring_status: RingStatusEnum,
+                        user: UserModel):
+        log.info(f"Tomorrow is ring day for user `{user.id}` with status `{ring_status}`")
         if RingStatusEnum.INSERTED == ring_status:
             self.tg_bot.send_message(chat_id=user.user.chat_id,
-                                     text=self.constant_bean.time_to_insert_ring(
+                                     text=self.constant_bean.tomorrow_ring_insertion(
                                          self.user_service_bean.retrieve_user_language_preference(
                                              chat_id=user.user.chat_id)),
                                      parse_mode=constant_bean.parser())
         else:
             self.tg_bot.send_message(chat_id=user.user.chat_id,
-                                     text=self.constant_bean.time_to_remove_ring(
+                                     text=self.constant_bean.tomorrow_ring_removal(
                                          self.user_service_bean.retrieve_user_language_preference(
                                              chat_id=user.user.chat_id)),
                                      parse_mode=constant_bean.parser())

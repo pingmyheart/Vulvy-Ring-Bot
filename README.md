@@ -31,11 +31,56 @@ with timely notifications, calendar integration, and personalized settings.
 - Python 3.8+
 - MongoDB (for persistent storage)
 - [pip](https://pip.pypa.io/en/stable/)
+- Telegram Bot Token from [@BotFather](https://t.me/botfather)
 
 ### Installation
+
+#### Native Installation
+
+1. Clone the repository
 
 ```bash
 git clone https://github.com/pingmyheart/Vulvy-Ring-Bot.git
 cd Vulvy-Ring-Bot
 pip install -r requirements.txt
+```
+
+2. Set up environment variables
+
+```bash
+export MONGODB_USERNAME=root
+export MONGODB_PASSWORD=root
+export MONGODB_HOST=localhost
+export MONGODB_DB=VulvyRing
+
+export TG_BOT_TOKEN=XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+#### Docker Installation
+
+1. Pull the docker image
+
+```bash
+docker pull pingmyheart/vulvy-ring-bot:${VERSION}
+```
+
+2. Run the container
+
+```yaml
+services:
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - mongodb_data:/data/db
+  vulvy-ring-bot:
+    image: pingmyheart/vulvy-ring-bot:${VERSION}
+    environment:
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+      - MONGODB_HOST=mongodb
+      - MONGODB_DB=VulvyRing
+      - TG_BOT_TOKEN=XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```

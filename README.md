@@ -84,3 +84,7 @@ services:
       - MONGODB_DB=VulvyRing
       - TG_BOT_TOKEN=XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
+
+## Usage
+
+![alt text](assets/run-bot.gif)

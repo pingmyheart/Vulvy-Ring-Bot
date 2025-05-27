@@ -50,3 +50,11 @@ class UserRepository:
         :return: List of UserModel
         """
         return [UserModel.model_validate(model) for model in self.database.find()]
+
+    def find_all_by_birth_day_and_month(self, day: int,
+                                        month: int) -> List[UserModel]:
+        """
+        Find all users with a birthday on the specified day and month.
+        """
+        return [UserModel.model_validate(model) for model in
+                self.database.find({"user.date_of_birth": {"$regex": f".*{month:02d}-{day:02d}"}})]

@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -10,7 +9,7 @@ class UserInformation(BaseModel):
     """
     username: str
     chat_id: int
-    date_of_birth: Optional[datetime] = None
+    date_of_birth: Optional[str] = None
     language: Optional[str] = None
 
 

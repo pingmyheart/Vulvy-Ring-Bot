@@ -8,7 +8,7 @@ from enumerated.ring_status_enum import RingStatusEnum
 from persistence.model.user_model import UserModel
 from service.ring_service import RingService
 from service.user_service import UserService
-from util import constant_bean, Constant
+from util import Constant
 
 
 class RingNotificationScheduler:
@@ -59,10 +59,10 @@ class RingNotificationScheduler:
                                      text=self.constant_bean.time_to_insert_ring(
                                          self.user_service_bean.retrieve_user_language_preference(
                                              chat_id=user.user.chat_id)),
-                                     parse_mode=constant_bean.parser())
+                                     parse_mode=self.constant_bean.parser())
         else:
             self.tg_bot.send_message(chat_id=user.user.chat_id,
                                      text=self.constant_bean.time_to_remove_ring(
                                          self.user_service_bean.retrieve_user_language_preference(
                                              chat_id=user.user.chat_id)),
-                                     parse_mode=constant_bean.parser())
+                                     parse_mode=self.constant_bean.parser())

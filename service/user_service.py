@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from persistence.model.user_model import UserModel, UserInformation, RingInformation, TimeZoneInformation
 from persistence.repository import UserRepository
 
@@ -41,3 +43,8 @@ class UserService:
             self.user_repository.save(user=user)
         else:
             raise ValueError("User not found")
+
+    def get_users_with_birthdays_today(self):
+        today = datetime.now()
+        return self.user_repository.find_all_by_birth_day_and_month(day=today.day,
+                                                                    month=today.month)

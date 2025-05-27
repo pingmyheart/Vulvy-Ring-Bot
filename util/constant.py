@@ -130,3 +130,7 @@ class Constant:
     def tomorrow_ring_removal(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="response.timeToRemoveRing.tomorrow")
+
+    def happy_birthday(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="response.happyBirthday")

@@ -5,4 +5,4 @@ class MessageUtil:
         elif hasattr(message.from_user, "username"):
             return message.from_user.username
         else:
-            return "there"
+            return "Sweety"

@@ -26,6 +26,9 @@ class RingReminderNotificationScheduler:
         for user in self.user_service_bean.retrieve_all_users():
             log.info(f"Checking user `{user.id}`")
             try:
+                if not user.ring.ring_date or not user.ring.ring_insertion_time:
+                    log.info(f"Skipping user `{user.id}` due to missing ring date or insertion time")
+                    continue
                 tz = ZoneInfo(user.timezone.time_zone)
                 now_at_timezone = now.astimezone(tz)
                 ring_date = datetime.strptime(user.ring.ring_date, "%Y-%m-%d")

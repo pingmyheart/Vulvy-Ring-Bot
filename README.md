@@ -61,7 +61,7 @@ export TG_BOT_TOKEN=XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 1. Pull the docker image
 
 ```bash
-docker pull pingmyheart/vulvy-ring-bot:${VERSION}
+docker pull ghcr.io/pingmyheart/vulvy-ring-bot:${VERSION}
 ```
 
 2. Run the container

@@ -27,8 +27,8 @@ class TimeZoneInformation(BaseModel):
     Time zone information.
     """
     time_zone: Optional[str] = None  # e.g. "Europe/Rome"
-    time_offset: Optional[int] = None  # e.g. 3600 for UTC+1
-    time_offset_str: Optional[str] = None  # e.g. "+01:00"
+    # time_offset: Optional[int] = None  # e.g. 3600 for UTC+1
+    # time_offset_str: Optional[str] = None  # e.g. "+01:00"
 
 
 class UserModel(BaseModel):

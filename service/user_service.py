@@ -20,8 +20,11 @@ class UserService:
     def update_user_language_preference(self, chat_id: int,
                                         language: str, ):
         user = self.user_repository.find_by_chat_id(chat_id=chat_id)
-        user.user.language = language
-        self.user_repository.save(user=user)
+        if user is not None:
+            user.user.language = language
+            self.user_repository.save(user=user)
+        else:
+            raise ValueError("User not found")
 
     def retrieve_user_language_preference(self, chat_id: int) -> str:
         user = self.user_repository.find_by_chat_id(chat_id=chat_id)
@@ -48,3 +51,12 @@ class UserService:
         today = datetime.now()
         return self.user_repository.find_all_by_birth_day_and_month(day=today.day,
                                                                     month=today.month)
+
+    def update_birth_date(self, chat_id: int,
+                          birth_date: str):
+        user = self.user_repository.find_by_chat_id(chat_id=chat_id)
+        if user is not None:
+            user.user.date_of_birth = birth_date
+            self.user_repository.save(user=user)
+        else:
+            raise ValueError("User not found")

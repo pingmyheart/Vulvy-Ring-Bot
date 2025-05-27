@@ -71,6 +71,26 @@ def handle_location(message):
     location_command_handler_bean.handle(message=message)
 
 
+@bot.message_handler(func=lambda message: user_state.get(message.chat.id) == "awaiting_birth_date_insertion")
+@log_triggered_method
+def handle_birth_date_insertion(message):
+    try:
+        provided_date = datetime.strptime(message.text, "%Y-%m-%d")
+        parsed_time = f'{provided_date.year}-{provided_date.month}-{provided_date.day}'
+        user_service_bean.update_birth_date(chat_id=message.chat.id,
+                                            birth_date=parsed_time)
+        user_state[message.chat.id] = None
+        bot.send_message(chat_id=message.chat.id,
+                         text=constant_bean.ring_date_accepted(
+                             user_service_bean.retrieve_user_language_preference(chat_id=message.chat.id)),
+                         parse_mode=constant_bean.parser())
+    except ValueError:
+        bot.send_message(chat_id=message.chat.id,
+                         text=constant_bean.invalid_date(
+                             user_service_bean.retrieve_user_language_preference(chat_id=message.chat.id)),
+                         parse_mode=constant_bean.parser())
+
+
 @bot.message_handler(func=lambda message: user_state.get(message.chat.id) == "awaiting_ring_insertion_date")
 @log_triggered_method
 def handle_ring_insertion_date(message):
@@ -116,6 +136,13 @@ def handle_ring_insertion_time(message):
                          text=constant_bean.invalid_time(
                              user_service_bean.retrieve_user_language_preference(chat_id=message.chat.id)),
                          parse_mode=constant_bean.parser())
+
+
+@bot.message_handler(func=lambda
+        message: message.text == f'🎂 {constant_bean.birthday_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=message.chat.id))}')
+@log_triggered_method
+def handle_birth_date_button(message):
+    user_state[message.chat.id] = "awaiting_birth_date_insertion"
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -169,7 +196,9 @@ def handle_query(call):
         location_button = types.KeyboardButton(
             f'📍 {constant_bean.location_for_timezone_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id))}',
             request_location=True)
-        markup.add(location_button)
+        birthday_button = types.KeyboardButton(
+            f'🎂 {constant_bean.birthday_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id))}')
+        markup.add(location_button, birthday_button)
         bot.send_message(chat_id=call.message.chat.id,
                          text=constant_bean.choose_option(
                              user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id)),

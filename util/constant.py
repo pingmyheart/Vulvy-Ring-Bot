@@ -134,3 +134,7 @@ class Constant:
     def happy_birthday(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="response.happyBirthday")
+
+    def birthday_placeholder(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="placeholder.birthday")

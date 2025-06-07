@@ -76,7 +76,7 @@ services:
     volumes:
       - mongodb_data:/data/db
   vulvy-ring-bot:
-    image: pingmyheart/vulvy-ring-bot:${VERSION}
+    image: ghcr.io/pingmyheart/vulvy-ring-bot:${VERSION}
     environment:
       - MONGODB_USERNAME=root
       - MONGODB_PASSWORD=root

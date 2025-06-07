@@ -7,6 +7,6 @@ warnings.filterwarnings("ignore")
 
 setup(
     name='vulvy-ring-bot',
-    version='0.0.1',
+    version='0.0.2.dev0',
     packages=find_packages()
 )

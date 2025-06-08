@@ -35,9 +35,8 @@ birthday_notification_scheduler_bean = BirthdayNotificationScheduler(user_servic
 # Initialize the scheduler
 scheduler = BackgroundScheduler(timezone=ZoneInfo("UTC"))
 cron_expr_every_minute = CronTrigger.from_crontab("* * * * *")
-cron_expr_every_morning = CronTrigger.from_crontab("* * * * *")
 scheduler.add_job(ring_notification_scheduler_bean.schedule, cron_expr_every_minute)
 scheduler.add_job(ring_reminder_notification_scheduler_bean.schedule, cron_expr_every_minute)
 scheduler.add_job(one_hour_at_ring_reminder_notification_scheduler_bean.schedule, cron_expr_every_minute)
-scheduler.add_job(birthday_notification_scheduler_bean.schedule, cron_expr_every_morning)
+scheduler.add_job(birthday_notification_scheduler_bean.schedule, cron_expr_every_minute)
 scheduler.start()

@@ -25,7 +25,9 @@ class CalendarCommandHandler:
                     if (element["status"] == RingStatusEnum.INSERTED) \
                     else self.constant_bean.ring_remove(
                     self.user_service_bean.retrieve_user_language_preference(chat_id=message.chat.id))
-                formatted_string += f'{element["date"]} - {status}\n'
+                status_emoji = "🛟⬆️" if element["status"] == RingStatusEnum.INSERTED else "🛟⬇️"
+                status_emoji_rev = "⬆️🛟" if element["status"] == RingStatusEnum.INSERTED else "⬇️🛟"
+                formatted_string += f'📆{element["date"]} - {status_emoji}{status}{status_emoji_rev}\n'
             self.bot.send_message(chat_id=message.chat.id,
                                   text=formatted_string,
                                   parse_mode=self.constant_bean.parser())

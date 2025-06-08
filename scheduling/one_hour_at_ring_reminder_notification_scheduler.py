@@ -36,14 +36,14 @@ class OneHourAtRingReminderNotificationScheduler:
                 if user.ring.ring_status == RingStatusEnum.INSERTED.code:
                     if now_at_timezone.day == (ring_date + timedelta(days=20)).day and \
                             now_at_timezone.month == (ring_date + timedelta(days=20)).month and \
-                            now_at_timezone.hour == ring_time.hour - 1 and \
+                            now_at_timezone.hour == ring_time.hour + 1 and \
                             now_at_timezone.minute == ring_time.minute:
                         self.__handle_notify(ring_status=RingStatusEnum.REMOVED,
                                              user=user)
                 else:
                     if now_at_timezone.day == (ring_date + timedelta(days=6)).day and \
                             now_at_timezone.month == (ring_date + timedelta(days=6)).month and \
-                            now_at_timezone.hour == ring_time.hour - 1 and \
+                            now_at_timezone.hour == ring_time.hour + 1 and \
                             now_at_timezone.minute == ring_time.minute:
                         self.__handle_notify(ring_status=RingStatusEnum.INSERTED,
                                              user=user)

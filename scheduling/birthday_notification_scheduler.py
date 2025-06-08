@@ -23,7 +23,5 @@ class BirthdayNotificationScheduler:
             if now_at_user_timezone.hour == 11 and \
                     now_at_user_timezone.minute == 0:
                 self.tg_bot.send_message(chat_id=user.user.chat_id,
-                                         text=self.constant_bean.happy_birthday(
-                                             self.user_service_bean.retrieve_user_language_preference(
-                                                 chat_id=user.user.chat_id)).format(username=user.user.username),
+                                         text=f"🎊🎉🥳{self.constant_bean.happy_birthday(self.user_service_bean.retrieve_user_language_preference(chat_id=user.user.chat_id)).format(username=user.user.username)}",
                                          parse_mode=self.constant_bean.parser())

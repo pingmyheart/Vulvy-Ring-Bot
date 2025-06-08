@@ -59,13 +59,9 @@ class RingNotificationScheduler:
                                                   ring_status=ring_status)
         if RingStatusEnum.INSERTED == ring_status:
             self.tg_bot.send_message(chat_id=user.user.chat_id,
-                                     text=self.constant_bean.time_to_insert_ring(
-                                         self.user_service_bean.retrieve_user_language_preference(
-                                             chat_id=user.user.chat_id)),
+                                     text=f"⚠️🚨{self.constant_bean.time_to_insert_ring(self.user_service_bean.retrieve_user_language_preference(chat_id=user.user.chat_id))}🚨⚠️",
                                      parse_mode=self.constant_bean.parser())
         else:
             self.tg_bot.send_message(chat_id=user.user.chat_id,
-                                     text=self.constant_bean.time_to_remove_ring(
-                                         self.user_service_bean.retrieve_user_language_preference(
-                                             chat_id=user.user.chat_id)),
+                                     text=f"⚠️🚨{self.constant_bean.time_to_remove_ring(self.user_service_bean.retrieve_user_language_preference(chat_id=user.user.chat_id))}🚨⚠️",
                                      parse_mode=self.constant_bean.parser())

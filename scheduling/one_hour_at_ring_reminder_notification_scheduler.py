@@ -11,7 +11,7 @@ from service.user_service import UserService
 from util import constant_bean, Constant
 
 
-class RingReminderNotificationScheduler:
+class OneHourAtRingReminderNotificationScheduler:
     def __init__(self, user_service_bean: UserService,
                  ring_service_bean: RingService,
                  constant_bean: Constant,

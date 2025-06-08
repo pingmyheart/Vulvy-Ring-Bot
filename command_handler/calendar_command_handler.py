@@ -27,7 +27,7 @@ class CalendarCommandHandler:
                     self.user_service_bean.retrieve_user_language_preference(chat_id=message.chat.id))
                 status_emoji = "🛟⬆️" if element["status"] == RingStatusEnum.INSERTED else "🛟⬇️"
                 status_emoji_rev = "⬆️🛟" if element["status"] == RingStatusEnum.INSERTED else "⬇️🛟"
-                formatted_string += f'📆{element["date"]} - {status_emoji}{status}{status_emoji_rev}\n'
+                formatted_string += f'📆 {element["date"]} - {status_emoji} {status} {status_emoji_rev}\n'
             self.bot.send_message(chat_id=message.chat.id,
                                   text=formatted_string,
                                   parse_mode=self.constant_bean.parser())

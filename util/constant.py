@@ -143,6 +143,14 @@ class Constant:
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="response.happyBirthday")
 
+    def ask_birthday(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="placeholder.ask.birthday")
+
     def birthday_placeholder(self, lang: str):
         return self.__translation_holder.find_translation(lang=lang,
                                                           i18n_key="placeholder.birthday")
+
+    def timezone_placeholder(self, lang: str):
+        return self.__translation_holder.find_translation(lang=lang,
+                                                          i18n_key="placeholder.timezone")

@@ -18,7 +18,7 @@ class TestRingService(TestCase):
 
             user = UserModel(user=UserInformation(username="maria_rossi",
                                                   chat_id=1234567890,
-                                                  date_of_birth=datetime.strptime("1990-10-10", "%Y-%m-%d")),
+                                                  date_of_birth=datetime.strptime("1990-10-10", "%Y-%m-%d").__str__()),
                              ring=RingInformation(ring_date=datetime.now().strftime("%Y-%m-%d"),
                                                   ring_insertion_time="15:00",
                                                   ring_status=RingStatusEnum.INSERTED.code))

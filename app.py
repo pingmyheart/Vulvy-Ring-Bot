@@ -138,13 +138,6 @@ def handle_ring_insertion_time(message):
                          parse_mode=constant_bean.parser())
 
 
-@bot.message_handler(func=lambda
-        message: message.text == f'🎂 {constant_bean.birthday_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=message.chat.id))}')
-@log_triggered_method
-def handle_birth_date_button(message):
-    user_state[message.chat.id] = "awaiting_birth_date_insertion"
-
-
 @bot.callback_query_handler(func=lambda call: True)
 @log_triggered_method
 def handle_query(call):
@@ -191,19 +184,42 @@ def handle_query(call):
     elif call.data == "user":
         bot.delete_message(chat_id=call.message.chat.id,
                            message_id=call.message.message_id)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True,
-                                           one_time_keyboard=True)
-        location_button = types.KeyboardButton(
-            f'📍 {constant_bean.location_for_timezone_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id))}',
-            request_location=True)
-        birthday_button = types.KeyboardButton(
-            f'🎂 {constant_bean.birthday_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id))}')
-        markup.add(location_button, birthday_button)
+        markup = types.InlineKeyboardMarkup()
+        timezone_button = types.InlineKeyboardButton(
+            f'🌐 {constant_bean.timezone_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id))}',
+            callback_data="timezone-set"
+        )
+        birthday_button = types.InlineKeyboardButton(
+            f'🎂 {constant_bean.birthday_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id))}',
+            callback_data="birthday-set"
+        )
+        markup.add(timezone_button, birthday_button)
         bot.send_message(chat_id=call.message.chat.id,
                          text=constant_bean.choose_option(
                              user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id)),
                          parse_mode=constant_bean.parser(),
                          reply_markup=markup)
+    elif call.data == "timezone-set":
+        bot.delete_message(chat_id=call.message.chat.id,
+                           message_id=call.message.message_id)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True,
+                                           one_time_keyboard=True)
+        location_button = types.KeyboardButton(
+            f'📍 {constant_bean.location_for_timezone_placeholder(user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id))}',
+            request_location=True)
+        markup.add(location_button)
+        bot.send_message(chat_id=call.message.chat.id,
+                         text=constant_bean.choose_option(
+                             user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id)),
+                         parse_mode=constant_bean.parser(),
+                         reply_markup=markup)
+    elif call.data == "birthday-set":
+        bot.delete_message(chat_id=call.message.chat.id,
+                           message_id=call.message.message_id)
+        user_state[call.message.chat.id] = "awaiting_birth_date_insertion"
+        bot.send_message(chat_id=call.message.chat.id,
+                         text=f'🎂 {constant_bean.ask_birthday(user_service_bean.retrieve_user_language_preference(chat_id=call.message.chat.id))}',
+                         parse_mode=constant_bean.parser())
     else:
         bot.send_message(chat_id=call.message.chat.id,
                          text=constant_bean.unknown_option(
